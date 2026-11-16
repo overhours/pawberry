@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pawberry</title>
+    <meta name="description" content="Pawberry: a cosy pink pixel-art cat-collecting adventure for Windows." />
+    <link rel="icon" href="icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Pixelify+Sans:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <div class="hero-text">
+        <img src="icon.png" alt="" class="logo-icon" width="96" height="96" />
+        <h1>Pawberry</h1>
+        <p class="tagline">a cosy cat-collecting adventure</p>
+        <p>Summon adorable pixel cats, raise and evolve them, battle corrupted bosses, climb the endless tower, go fishing and build the sanctuary of your dreams.</p>
+        <div class="downloads">
+          <a class="btn big" id="dl-setup" href="https://github.com/overhours/pawberry-updates/releases/latest">Download for Windows</a>
+          <a class="btn soft" id="dl-portable" href="https://github.com/overhours/pawberry-updates/releases/latest">Portable version</a>
+        </div>
+        <p class="small" id="version">Latest version: checking...</p>
+      </div>
+      <div class="hero-elsie">
+        <span class="bubble">Hi! I'm Elsie, your sanctuary guide!</span>
+        <img src="elsie.png" alt="Elsie, the sanctuary's tour guide" width="240" />
+      </div>
+    </header>
+
+    <main>
+      <section class="features">
+        <h2>What's inside</h2>
+        <ul>
+          <li><b>Summon</b> 70+ cats across seven rarities, with weekly limited banners and wishes.</li>
+          <li><b>Battle</b> in real time: block boss attacks, focus targets and chain special combos.</li>
+          <li><b>Five bosses</b> with phases, then the <b>Endless Tower</b> with a new twist every week.</li>
+          <li><b>Rebirth</b> after the final boss for permanent bonuses.</li>
+          <li><b>Mini-games:</b> fishing, a cat café, Berry Catch and treasure hunting.</li>
+          <li><b>Auto-updates</b>, so you always have the newest version.</li>
+        </ul>
+      </section>
+
+      <section class="boards">
+        <h2>Leaderboards</h2>
+        <p class="small">Players who joined the online leaderboards in the game.</p>
+        <div class="tabs" id="tabs"></div>
+        <ol class="board" id="board"><li class="empty">Loading...</li></ol>
+      </section>
+    </main>
+
+    <footer>
+      <p>Made with love (and a lot of strawberries). Windows may show a SmartScreen warning the first time: click "More info", then "Run anyway".</p>
+    </footer>
+    <script src="config.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
