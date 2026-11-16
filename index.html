@@ -17,7 +17,6 @@
     <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Pixelify+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="style.css" />
     <script>
-      // Apply a saved theme before first paint, so there's no flash.
       try {
         const t = localStorage.getItem('pawberry-theme')
         if (t) document.documentElement.dataset.theme = t
@@ -27,253 +26,277 @@
   <body>
     <a class="skip" href="#main">Skip to content</a>
 
-    <nav class="topbar" aria-label="Main">
-      <a class="brand" href="#top"><img src="icon.png" alt="" width="32" height="32" /> Pawberry</a>
-      <div class="navlinks">
-        <a href="#features">Features</a>
-        <a href="#summon">Try a summon</a>
-        <a href="#cats">Cats</a>
-        <a href="#leaderboards">Leaderboards</a>
-        <a href="#updates">Updates</a>
-        <a href="#faq">FAQ</a>
-      </div>
-      <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Switch between light and dark">
-        <span class="sun" aria-hidden="true"></span>
-      </button>
-      <a class="btn small" href="#download" data-download="setup">Download</a>
-    </nav>
+    <!-- floating navigation -->
+    <header class="nav-wrap">
+      <nav class="nav" aria-label="Main">
+        <a class="brand" href="#top"><img src="icon.png" alt="" width="30" height="30" /><span>Pawberry</span></a>
+        <div class="nav-links" id="nav-links">
+          <a href="#summon">Summon</a>
+          <a href="#battle">Battle</a>
+          <a href="#tower">Bosses</a>
+          <a href="#cats">Cats</a>
+          <a href="#leaderboards">Ranks</a>
+          <a href="#updates">Updates</a>
+          <a href="#faq">FAQ</a>
+          <span class="nav-indicator" id="nav-indicator" aria-hidden="true"></span>
+        </div>
+        <div class="nav-end">
+          <button type="button" class="icon-btn" id="theme-toggle" aria-label="Switch light or dark"><span class="sun" aria-hidden="true"></span></button>
+          <button type="button" class="icon-btn menu-btn" id="menu-btn" aria-label="Open menu" aria-expanded="false"><span aria-hidden="true"></span></button>
+          <a class="btn btn-primary btn-sm" href="https://github.com/overhours/pawberry-updates/releases/latest" data-download="setup">Download</a>
+        </div>
+      </nav>
+    </header>
 
-    <header class="hero" id="top">
+    <!-- 0. hero: a flat pixel sky, like the game's title screen -->
+    <section class="hero" id="top">
       <div class="sky" aria-hidden="true">
+        <i class="band b1"></i><i class="band b2"></i><i class="band b3"></i><i class="band b4"></i>
         <div class="sun-pixel"></div>
         <div class="cloud c1"></div>
         <div class="cloud c2"></div>
         <div class="cloud c3"></div>
-        <div class="twinkles"></div>
       </div>
       <div class="hero-inner">
-        <img class="hero-cat" src="img/cats/berry.png" alt="" width="168" height="161" />
+        <img class="hero-cat px" src="img/cats/berry.png" alt="" width="144" height="138" />
         <h1 class="logo" aria-label="Pawberry">
           <span>P</span><span>a</span><span>w</span><span>b</span><span>e</span><span>r</span><span>r</span><span>y</span>
         </h1>
-        <p class="tagline">a cosy cat-collecting adventure</p>
-        <div class="cta" id="download">
-          <a class="btn big" href="https://github.com/overhours/pawberry-updates/releases/latest" data-download="setup">
-            <span class="btn-icon" aria-hidden="true">▼</span> Download for Windows
-          </a>
-          <a class="btn soft" href="https://github.com/overhours/pawberry-updates/releases/latest" data-download="portable">Portable version</a>
+        <p class="lead">Collect 75 pixel cats, raise them into legends, and build a sanctuary they'll never want to leave.</p>
+        <div class="hero-cta">
+          <a class="btn btn-primary btn-lg" href="https://github.com/overhours/pawberry-updates/releases/latest" data-download="setup">Download for Windows</a>
+          <a class="text-link" href="https://github.com/overhours/pawberry-updates/releases/latest" data-download="portable">or get the portable version</a>
         </div>
-        <p class="fineprint"><span id="version">Free</span> · Windows 10 &amp; 11 · updates itself automatically</p>
-        <ul class="stats" aria-label="Quick facts">
-          <li><b id="stat-cats">75</b> cats to collect</li>
-          <li><b>7</b> rarities, up to Secret</li>
-          <li><b>5</b> bosses + an endless tower</li>
-          <li id="stat-players-li"><b id="stat-players">Live</b> online leaderboards</li>
-        </ul>
+        <p class="facts"><span id="version">Free</span><i></i>Windows 10 &amp; 11<i></i>Updates itself</p>
       </div>
       <div class="hills" aria-hidden="true">
-        <svg viewBox="0 0 1440 200" preserveAspectRatio="none" shape-rendering="crispEdges">
-          <path class="hill-back" d="M0 110 Q180 40 360 96 Q540 60 720 100 Q900 30 1080 92 Q1260 56 1440 84 V200 H0Z" />
-          <path class="hill-front" d="M0 150 Q240 96 480 140 Q720 110 960 146 Q1200 104 1440 136 V200 H0Z" />
-        </svg>
+        <i class="hill h1"></i><i class="hill h2"></i><i class="ground"></i>
         <div class="parade" id="parade"></div>
       </div>
-      <div class="hero-elsie">
+      <figure class="hero-elsie">
         <p class="bubble" id="elsie-line" aria-live="polite">Hi hi! I'm Elsie, your sanctuary guide!</p>
-        <img src="elsie.png" alt="Elsie, the sanctuary guide" width="150" height="150" />
-      </div>
-    </header>
-
-    <div class="marquee" aria-hidden="true"><div class="marquee-track" id="marquee"></div></div>
+        <img class="px" src="elsie.png" alt="Elsie, the sanctuary guide" width="132" height="138" />
+      </figure>
+    </section>
 
     <main id="main">
-      <section class="section" id="features">
-        <h2 class="section-title"><span>What's inside</span></h2>
-
-        <article class="feature reveal">
-          <div class="shot-frame tilt-l">
-            <div class="frame-bar"><span>Summon</span><i></i><i></i><i></i></div>
-            <div class="crossfade">
-              <img src="img/shots/reveal-crack.webp" alt="A summon card cracking open" loading="lazy" width="1280" height="800" />
-              <img src="img/shots/reveal.webp" alt="An Incredible Mythical reveal of Celestia" loading="lazy" width="1280" height="800" />
+      <!-- 1. summon: a night-time stage with the real summon machine -->
+      <section class="s-summon" id="summon">
+        <div class="wrap summon-grid">
+          <div class="summon-copy reveal">
+            <p class="eyebrow">01 · Summon</p>
+            <h2 class="h2">Every pull is a little show</h2>
+            <p class="lead">Unravel a yarn ball and see who comes to play. The rarer the cat, the bigger the entrance, all the way up to the dazzling Secret reveals.</p>
+            <dl class="rate-list" id="rates" aria-label="Summon rates"></dl>
+            <p class="note">Pity keeps it fair: an Epic at least every 10 pulls and a Legendary by pull 80. Limited banners rotate weekly, and you can wish for the cat you want most.</p>
+          </div>
+          <div class="machine reveal">
+            <figure class="polaroid" aria-hidden="true"><img src="img/shots/reveal.webp" alt="" width="1280" height="800" loading="lazy" /><figcaption>a Mythical!</figcaption></figure>
+            <div class="machine-box">
+              <div class="machine-head"><span>Try it here</span><small id="summon-stats">real rates, just for fun</small></div>
+              <div class="stage" id="stage">
+                <button type="button" class="yarn" id="yarn" aria-label="Summon one cat"><span class="yarn-ball" aria-hidden="true"></span><span class="yarn-hint">click the yarn</span></button>
+                <div class="results" id="results" aria-live="polite"></div>
+              </div>
+              <div class="machine-actions">
+                <button type="button" class="btn btn-primary" id="pull1">Summon ×1</button>
+                <button type="button" class="btn btn-secondary" id="pull10">Summon ×10</button>
+              </div>
             </div>
           </div>
-          <div class="feature-text">
-            <span class="kicker">Summon</span>
-            <h3>Every pull is a little show</h3>
-            <p>Unravel yarn balls to meet new friends. The rarer the cat, the bigger the entrance, all the way up to the dazzling Secret reveals.</p>
-            <ul class="ticks">
-              <li>7 rarities with fair pity: an Epic at least every 10 pulls, a Legendary by 80</li>
-              <li>Weekly limited banners with their own featured cats and events</li>
-              <li>Make a wish on the everyday banner for the cat you want most</li>
-            </ul>
-          </div>
-        </article>
-
-        <article class="feature flip reveal">
-          <div class="shot-frame tilt-r">
-            <div class="frame-bar"><span>Battle</span><i></i><i></i><i></i></div>
-            <img src="img/shots/battle.webp" alt="A real-time battle against Queen Meowdusa" loading="lazy" width="1280" height="800" />
-            <span class="callout c-a">CRIT!</span>
-            <span class="callout c-b">Specials: 1-5</span>
-          </div>
-          <div class="feature-text">
-            <span class="kicker">Battle</span>
-            <h3>Hands-on, real-time fights</h3>
-            <p>Build a team of five from tanks, healers, attackers, supports and specialists, and use elements to your advantage.</p>
-            <ul class="ticks">
-              <li><b>Block</b> a boss's charged attack at the last moment to soften it</li>
-              <li><b>Focus</b> any enemy with a click</li>
-              <li>Fire two specials close together for a <b>COMBO</b></li>
-            </ul>
-          </div>
-        </article>
-
-        <article class="feature reveal">
-          <div class="shot-frame tilt-l">
-            <div class="frame-bar"><span>Endless Tower</span><i></i><i></i><i></i></div>
-            <img src="img/shots/tower.webp" alt="Fighting Shadowpaw on tower floor 10" loading="lazy" width="1280" height="800" />
-          </div>
-          <div class="feature-text">
-            <span class="kicker">Bosses &amp; Tower</span>
-            <h3>Five bosses, then forever</h3>
-            <p>Each boss has its own phases, charged attacks and tricks. Beat the Void Emperor, then climb the Endless Tower, where every week brings a new twist.</p>
-            <ul class="ticks">
-              <li>Bosses wound your team and enrage if you dawdle</li>
-              <li>Rebirth for permanent bonuses and go again, stronger</li>
-              <li>A daily Guild Raid against Gigachonk</li>
-            </ul>
-          </div>
-        </article>
-
-        <article class="feature flip reveal">
-          <div class="shot-frame tilt-r">
-            <div class="frame-bar"><span>Sanctuary</span><i></i><i></i><i></i></div>
-            <img src="img/shots/home.webp" alt="Cats wandering around the sanctuary garden" loading="lazy" width="1280" height="800" />
-          </div>
-          <div class="feature-text">
-            <span class="kicker">Sanctuary</span>
-            <h3>A home for every cat</h3>
-            <p>Your cats wander, nap and play in the sanctuary. Pet them, feed them treats and decorate with trophies from your adventures.</p>
-            <ul class="ticks">
-              <li>Cats with full hearts bring you a little gift each day</li>
-              <li>Unlock the Strawberry Patch and the Moon Pond</li>
-              <li>Elsie the guide is always there with a tip</li>
-            </ul>
-          </div>
-        </article>
-
-        <article class="feature reveal">
-          <div class="shot-frame tilt-l">
-            <div class="frame-bar"><span>Cat Fishing</span><i></i><i></i><i></i></div>
-            <img src="img/shots/fishing.webp" alt="Reeling in an Epic fish at the pond" loading="lazy" width="1280" height="800" />
-          </div>
-          <div class="feature-text">
-            <span class="kicker">Mini-games</span>
-            <h3>Take a break, earn rewards</h3>
-            <p>Four little games that pay out real rewards: fishing, a busy cat café, Berry Catch and treasure hunting.</p>
-            <ul class="ticks">
-              <li>14 fish to catch, including a secret one</li>
-              <li>Upgrade your rod or try Lucky Bait for rare catches</li>
-              <li>Daily treasure hunts with hot and cold hints</li>
-            </ul>
-          </div>
-        </article>
+        </div>
       </section>
 
-      <section class="section summon-section" id="summon">
-        <h2 class="section-title"><span>Try a summon</span></h2>
-        <p class="section-sub">The real rates from the game. Nothing here is saved to your game, it's just for fun!</p>
-        <div class="summon-box">
-          <div class="stage" id="stage">
-            <button type="button" class="yarn" id="yarn" aria-label="Summon one cat">
-              <span class="yarn-ball" aria-hidden="true"></span>
-              <span class="yarn-hint">Click me!</span>
-            </button>
-            <div class="results" id="results" aria-live="polite"></div>
+      <!-- 2. battle: one big annotated screenshot -->
+      <section class="s-battle" id="battle">
+        <div class="wrap">
+          <header class="section-head reveal">
+            <p class="eyebrow">02 · Battle</p>
+            <h2 class="h2">Real-time fights you actually play</h2>
+            <p class="lead narrow">Pick five cats, mind your elements, then step in at the right moment.</p>
+          </header>
+          <figure class="annotated reveal">
+            <img src="img/shots/battle.webp" alt="A battle against Queen Meowdusa" width="1280" height="800" loading="lazy" />
+            <span class="pin" style="--x: 9%; --y: 23%">1</span>
+            <span class="pin" style="--x: 77%; --y: 13%">2</span>
+            <span class="pin" style="--x: 87%; --y: 62%">3</span>
+          </figure>
+          <ol class="legend reveal">
+            <li><b>Specials.</b> Each cat charges a special. Fire it from the top bar or press 1–5. Two close together make a <em>combo</em>.</li>
+            <li><b>Block.</b> When a boss charges a big attack, hit Block right at the end to soften the blow.</li>
+            <li><b>Focus.</b> Click any enemy and the whole team goes after it.</li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- 3. bosses & tower: drawn tower + boss staircase on a night band -->
+      <section class="s-tower" id="tower">
+        <div class="wrap tower-grid">
+          <div class="tower-art reveal" aria-hidden="true">
+            <div class="tower-top">∞</div>
+            <div class="floors" id="floors"></div>
           </div>
-          <div class="summon-controls">
-            <button type="button" class="btn" id="pull1">Summon x1</button>
-            <button type="button" class="btn" id="pull10">Summon x10</button>
-            <p class="small" id="summon-stats">0 summons so far</p>
-            <div class="rates" id="rates"></div>
+          <div class="tower-copy">
+            <header class="reveal">
+              <p class="eyebrow light">03 · Bosses &amp; Tower</p>
+              <h2 class="h2">Five bosses. Then a tower that never ends.</h2>
+              <p class="lead">Every boss has phases, charged attacks and tricks of its own. Beat the Void Emperor, then climb the Endless Tower, with a boss every five floors and a new twist each week.</p>
+            </header>
+            <div class="staircase reveal" id="bosses"></div>
+            <p class="note light reveal">After the final boss you can <b>rebirth</b>: start over with stronger cats and bigger rewards, as many times as you like.</p>
           </div>
         </div>
       </section>
 
-      <section class="section" id="cats">
-        <h2 class="section-title"><span>Meet the cats</span></h2>
-        <p class="section-sub">75 cats across seven rarities. Click one to learn more. (Secret cats stay secret!)</p>
-        <div class="filters" id="filters" role="tablist" aria-label="Filter cats by rarity"></div>
-        <div class="gallery" id="gallery"></div>
-      </section>
-
-      <section class="bosses-band">
-        <div class="section">
-          <h2 class="section-title dark"><span>Can you beat them all?</span></h2>
-          <div class="boss-row" id="bosses"></div>
+      <!-- 4. sanctuary: a postcard -->
+      <section class="s-home">
+        <div class="wrap">
+          <div class="postcard reveal">
+            <img class="postcard-shot" src="img/shots/home.webp" alt="Cats wandering around the sanctuary garden" width="1280" height="800" loading="lazy" />
+            <div class="postcard-back">
+              <span class="stamp"><img class="px" src="img/cats/mochi.png" alt="" width="48" /></span>
+              <p class="eyebrow">04 · Sanctuary</p>
+              <h2 class="h3">Wish you were here!</h2>
+              <p class="handwritten">The cats nap by the fountain, chase each other round the bench and wait for head pats. The ones with full hearts even bring you little gifts. Come visit soon! <br />— Elsie</p>
+            </div>
+          </div>
         </div>
       </section>
 
-      <section class="section" id="leaderboards">
-        <h2 class="section-title"><span>Leaderboards</span></h2>
-        <p class="section-sub">Live from the game. Join from the <b>Ranks</b> screen to see yourself here.</p>
-        <div class="tabs" id="board-tabs" role="tablist" aria-label="Leaderboard"></div>
-        <div class="podium" id="podium"></div>
-        <ol class="board" id="board" start="4"></ol>
-        <p class="small center" id="board-note"></p>
-      </section>
-
-      <section class="section" id="updates">
-        <h2 class="section-title"><span>Patch notes</span></h2>
-        <div class="timeline" id="timeline"><p class="small">Loading the latest updates...</p></div>
-        <p class="center"><a class="link" href="https://github.com/overhours/pawberry-updates/releases">See every release</a></p>
-      </section>
-
-      <section class="section" id="faq">
-        <h2 class="section-title"><span>Questions</span></h2>
-        <div class="faq">
-          <details>
-            <summary>Is Pawberry free?</summary>
-            <p>Yes! It's free to download and play. Gems are earned by playing: battles, quests, mini-games, the daily login gift and more.</p>
-          </details>
-          <details>
-            <summary>Windows says "Windows protected your PC". Is it safe?</summary>
-            <p>That warning appears because the game isn't code-signed yet, not because anything is wrong. Click <b>More info</b>, then <b>Run anyway</b>. You only need to do it once.</p>
-          </details>
-          <details>
-            <summary>How do updates work?</summary>
-            <p>The installed game checks for new versions every few minutes. When one is out, an <b>Update!</b> button appears at the top. Click it, and Pawberry downloads the update, shows a small installing window and reopens on the new version. The portable version links you to the newest download instead.</p>
-          </details>
-          <details>
-            <summary>Where are my saves? Will I lose them when I update?</summary>
-            <p>Saves live in your Windows user folder, separate from the game files, so updating never touches them. You can also export a save from <b>Settings</b> to back it up or move it to another computer.</p>
-          </details>
-          <details>
-            <summary>What do the leaderboards share?</summary>
-            <p>Nothing unless you choose to join from the <b>Ranks</b> screen. Then your profile name and six stats are shown: rebirths, hours played, gems earned, bosses beaten, coins earned and fish caught. You can stop sharing any time.</p>
-          </details>
-          <details>
-            <summary>Is there a Mac or phone version?</summary>
-            <p>Not yet. Pawberry is Windows-only for now.</p>
-          </details>
+      <!-- 5. mini-games: an uneven grid of different tiles -->
+      <section class="s-games">
+        <div class="wrap">
+          <header class="section-head right reveal">
+            <p class="eyebrow">05 · Mini-games</p>
+            <h2 class="h2">Take a break, still earn rewards</h2>
+          </header>
+          <div class="bento">
+            <figure class="tile tile-fish reveal">
+              <img src="img/shots/fishing.webp" alt="Reeling in an Epic fish" width="1280" height="800" loading="lazy" />
+              <figcaption><b>Cat Fishing</b> Cast, hook and reel in 14 kinds of fish. Upgrade your rod, or try Lucky Bait for a rare catch.</figcaption>
+            </figure>
+            <div class="tile tile-cafe reveal">
+              <img class="px tile-sprite" src="img/cats/biscuit.png" alt="" width="72" />
+              <b>Cat Café</b>
+              <span>Serve hungry customers before they get grumpy.</span>
+            </div>
+            <div class="tile tile-berry reveal">
+              <div class="falling" aria-hidden="true"><img class="px" src="img/icons/strawberry.png" alt="" /><img class="px" src="img/icons/gem.png" alt="" /><img class="px" src="img/icons/strawberry.png" alt="" /></div>
+              <b>Berry Catch</b>
+              <span>Catch berries and gems. Dodge the rotten ones!</span>
+            </div>
+            <div class="tile tile-hunt reveal">
+              <div class="mini-grid" aria-hidden="true"><i>3</i><i>2</i><i>3</i><i>2</i><i>1</i><i>2</i><i>1</i><i class="x"></i><i>1</i></div>
+              <b>Treasure Hunt</b>
+              <span>Follow the numbers to buried chests.</span>
+            </div>
+          </div>
+          <div class="fish-strip reveal" id="fish-strip" aria-label="Every fish you can catch"></div>
         </div>
       </section>
 
-      <section class="final-cta">
-        <img src="elsie.png" alt="" width="150" height="150" />
-        <div>
-          <h2>The sanctuary is waiting!</h2>
-          <p>Elsie has a tour ready for you, and a strawberry kitten is already curled up by the fountain.</p>
-          <a class="btn big" href="https://github.com/overhours/pawberry-updates/releases/latest" data-download="setup">Download Pawberry</a>
+      <!-- 6. cats: a collector's binder grouped by rarity -->
+      <section class="s-cats" id="cats">
+        <div class="wrap">
+          <header class="section-head reveal">
+            <p class="eyebrow">06 · The collection</p>
+            <h2 class="h2">Meet the cats</h2>
+            <p class="lead narrow">75 cats across seven rarities. Click one to read its card. Secret cats stay secret.</p>
+          </header>
+          <div class="binder">
+            <div class="binder-tabs" id="filters" role="tablist" aria-label="Filter by rarity"></div>
+            <div class="binder-page" id="gallery"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7. leaderboards: a trophy room -->
+      <section class="s-ranks" id="leaderboards">
+        <div class="wrap">
+          <header class="section-head center reveal">
+            <p class="eyebrow">07 · Leaderboards</p>
+            <h2 class="h2">The trophy room</h2>
+            <p class="lead narrow">Live from the game. Join from the <b>Ranks</b> screen to see yourself up here.</p>
+          </header>
+          <div class="seg" id="board-tabs" role="tablist" aria-label="Leaderboard"></div>
+          <div class="podium" id="podium"></div>
+          <ol class="scoreboard" id="board"></ol>
+          <p class="tiny center" id="board-note"></p>
+        </div>
+      </section>
+
+      <!-- 8. updates: notebook paper -->
+      <section class="s-updates" id="updates">
+        <div class="wrap updates-grid">
+          <header class="section-head reveal">
+            <p class="eyebrow">08 · Updates</p>
+            <h2 class="h2">Patch notes</h2>
+            <p class="lead">Pawberry updates itself. Here's what changed recently.</p>
+            <a class="text-link" href="https://github.com/overhours/pawberry-updates/releases">Every release →</a>
+          </header>
+          <div class="notebook" id="timeline"></div>
+        </div>
+      </section>
+
+      <!-- 9. faq -->
+      <section class="s-faq" id="faq">
+        <div class="wrap faq-grid">
+          <aside class="faq-side reveal">
+            <p class="eyebrow">09 · Help</p>
+            <h2 class="h2">Questions</h2>
+            <img class="px faq-elsie" src="elsie.png" alt="" width="150" height="157" />
+          </aside>
+          <div class="faq">
+            <details>
+              <summary>Is Pawberry free?</summary>
+              <p>Yes. It's free to download and play. Gems are earned by playing: battles, quests, mini-games, the daily login gift and more.</p>
+            </details>
+            <details>
+              <summary>Windows says "Windows protected your PC". Is it safe?</summary>
+              <p>That warning appears because the game isn't code-signed yet, not because anything is wrong. Click <b>More info</b>, then <b>Run anyway</b>. You only need to do it once.</p>
+            </details>
+            <details>
+              <summary>How do updates work?</summary>
+              <p>The installed game checks for new versions every few minutes. When one is out, an <b>Update!</b> button appears at the top. Click it, and Pawberry downloads it, shows a small installing window and reopens on the new version. The portable version links you to the newest download instead.</p>
+            </details>
+            <details>
+              <summary>Will I lose my save when I update?</summary>
+              <p>No. Saves live in your Windows user folder, separate from the game files. You can also export a save from <b>Settings</b> to back it up or move it to another computer.</p>
+            </details>
+            <details>
+              <summary>What do the leaderboards share?</summary>
+              <p>Nothing, unless you join from the <b>Ranks</b> screen. Then your profile name and six stats are shown: rebirths, hours played, gems earned, bosses beaten, coins earned and fish caught. You can stop sharing any time.</p>
+            </details>
+            <details>
+              <summary>Is there a Mac or phone version?</summary>
+              <p>Not yet. Pawberry is Windows-only for now.</p>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <!-- 10. last call -->
+      <section class="s-cta">
+        <div class="wrap cta-row">
+          <img class="px" src="img/cats/berry.png" alt="" width="120" />
+          <div>
+            <h2 class="h2">The sanctuary is waiting</h2>
+            <p class="lead">A strawberry kitten is already curled up by the fountain.</p>
+          </div>
+          <a class="btn btn-primary btn-lg" href="https://github.com/overhours/pawberry-updates/releases/latest" data-download="setup">Download Pawberry</a>
         </div>
       </section>
     </main>
 
     <footer class="footer">
-      <p><img src="icon.png" alt="" width="20" height="20" /> Pawberry · made with love and a lot of strawberries</p>
-      <p class="small"><a class="link" href="https://github.com/overhours/pawberry-updates/releases">Releases</a></p>
+      <div class="wrap footer-row">
+        <span class="brand small"><img src="icon.png" alt="" width="22" height="22" /> Pawberry</span>
+        <span class="tiny">Made with love and a lot of strawberries.</span>
+        <a class="text-link" href="https://github.com/overhours/pawberry-updates/releases">Releases</a>
+      </div>
     </footer>
+
+    <div class="floaties" aria-hidden="true"></div>
 
     <div class="modal" id="cat-modal" hidden>
       <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="cat-modal-name">
