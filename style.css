@@ -1,0 +1,198 @@
+:root {
+  --bg: #fff1f4;
+  --check: rgba(255, 143, 177, 0.13);
+  --panel: #fffaf4;
+  --panel-2: #ffeef2;
+  --line: #6b2e3f;
+  --primary: #ff8fb1;
+  --primary-d: #e8608a;
+  --yel: #ffe08a;
+  --text: #5a2a35;
+  --soft: #9a6470;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #2b1b2f;
+    --check: rgba(255, 143, 177, 0.06);
+    --panel: #3d2643;
+    --panel-2: #4a2e51;
+    --line: #170c1a;
+    --text: #ffe6ee;
+    --soft: #d1a6b9;
+  }
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  font-family: 'DotGothic16', 'Pixelify Sans', monospace;
+  color: var(--text);
+  background-color: var(--bg);
+  background-image: linear-gradient(90deg, var(--check) 50%, transparent 50%), linear-gradient(var(--check) 50%, transparent 50%);
+  background-size: 32px 32px;
+  line-height: 1.6;
+}
+h1,
+h2 {
+  font-family: 'Pixelify Sans', monospace;
+  margin: 0 0 8px;
+}
+h1 {
+  font-size: clamp(48px, 9vw, 84px);
+  line-height: 1;
+  color: var(--primary);
+  text-shadow: -4px 0 0 var(--line), 4px 0 0 var(--line), 0 -4px 0 var(--line), 0 4px 0 var(--line), 4px 4px 0 var(--line), -4px -4px 0 var(--line), 4px -4px 0 var(--line), -4px 4px 0 var(--line), 0 9px 0 var(--line);
+}
+.small {
+  font-size: 14px;
+  color: var(--soft);
+}
+.hero,
+main section,
+footer {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding-top: 48px;
+  padding-bottom: 32px;
+  flex-wrap: wrap;
+}
+.hero-text {
+  flex: 1 1 380px;
+}
+.logo-icon {
+  image-rendering: pixelated;
+  border-radius: 18px;
+  box-shadow: 0 0 0 4px var(--line);
+}
+.tagline {
+  font-size: 20px;
+  color: var(--soft);
+  margin: 6px 0 12px;
+}
+.hero-elsie {
+  position: relative;
+  flex: 0 1 260px;
+  text-align: center;
+}
+.hero-elsie img {
+  max-width: 100%;
+  height: auto;
+  animation: bob 2.4s ease-in-out infinite;
+}
+.bubble {
+  display: inline-block;
+  padding: 6px 12px;
+  margin-bottom: 8px;
+  background: var(--panel);
+  box-shadow: 0 0 0 3px var(--line);
+  font-size: 14px;
+}
+@keyframes bob {
+  50% {
+    transform: translateY(-6px);
+  }
+}
+.downloads {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 16px 0 6px;
+}
+.btn {
+  display: inline-block;
+  padding: 10px 18px;
+  font-family: 'Pixelify Sans', monospace;
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  text-decoration: none;
+  background: var(--primary);
+  box-shadow: 0 0 0 3px var(--line), inset 0 -5px 0 var(--primary-d);
+  transition: transform 0.12s;
+}
+.btn:hover {
+  transform: translateY(-2px);
+}
+.btn.big {
+  font-size: 22px;
+  padding: 14px 24px;
+}
+.btn.soft {
+  color: var(--text);
+  background: var(--panel-2);
+  box-shadow: 0 0 0 3px var(--line), inset 0 -5px 0 rgba(107, 46, 63, 0.15);
+}
+main section {
+  margin-bottom: 32px;
+}
+.features ul,
+.board {
+  background: var(--panel);
+  box-shadow: 0 0 0 3px var(--line), 6px 6px 0 3px rgba(107, 46, 63, 0.25);
+  padding: 16px 24px 16px 40px;
+  margin: 0;
+}
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 10px 0 14px;
+}
+.tab {
+  font: inherit;
+  font-size: 14px;
+  padding: 6px 12px;
+  border: 0;
+  cursor: pointer;
+  color: var(--text);
+  background: var(--panel-2);
+  box-shadow: 0 0 0 3px var(--line);
+}
+.tab[aria-selected='true'] {
+  color: #fff;
+  background: var(--primary);
+}
+.board {
+  list-style: none;
+  padding: 10px 16px;
+}
+.board li {
+  display: grid;
+  grid-template-columns: 40px 1fr auto;
+  gap: 12px;
+  padding: 6px 4px;
+  border-bottom: 2px dashed rgba(107, 46, 63, 0.15);
+}
+.board li:last-child {
+  border-bottom: 0;
+}
+.board .rank {
+  font-family: 'Pixelify Sans', monospace;
+  font-weight: 700;
+  text-align: center;
+}
+.board li:nth-child(1) .rank {
+  color: #e8a020;
+}
+.board .empty {
+  display: block;
+  color: var(--soft);
+}
+footer {
+  padding-bottom: 40px;
+  font-size: 14px;
+  color: var(--soft);
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-elsie img {
+    animation: none;
+  }
+}
