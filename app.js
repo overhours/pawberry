@@ -217,9 +217,10 @@ function buildFish() {
 
 /* ---------- the collection binder ---------- */
 let filter = 'all'
+let limit = 60 // per-rarity pages: hundreds of cats per tab, shown 60 at a time
 function buildGallery() {
   const tabs = [['all', 'All'], ...RARITIES.map((r) => [r, GAME.rarity[r].label]), ['limited', 'Limited']]
-  $('filters').replaceChildren(...tabs.map(([id, label]) => el('button', { class: 'binder-tab', type: 'button', role: 'tab', 'aria-selected': String(id === filter), onclick: () => ((filter = id), buildGallery()) }, label)))
+  $('filters').replaceChildren(...tabs.map(([id, label]) => el('button', { class: 'binder-tab', type: 'button', role: 'tab', 'aria-selected': String(id === filter), onclick: () => ((filter = id), (limit = 60), buildGallery()) }, label)))
   const pick = (c) => filter === 'all' || (filter === 'limited' ? c.exclusive : c.rarity === filter)
   const groups = RARITIES.map((r) => [r, GAME.cats.filter((c) => c.rarity === r && pick(c))]).filter(([, cats]) => cats.length)
   $('gallery').replaceChildren(
@@ -229,9 +230,10 @@ function buildGallery() {
         { class: 'rarity-group', style: rarityStyle(r) },
         el('h3', { class: 'rarity-label' }, GAME.rarity[r].label, el('small', { text: `${cats.length} cat${cats.length === 1 ? '' : 's'}` })),
         // On "All", each rarity shows a short preview so the page doesn't become one long wall of cards.
-        el('div', { class: 'slots' }, ...(filter === 'all' ? cats.slice(0, RARITIES.indexOf(r) >= 4 ? 4 : 7) : cats).map(slot)),
+        el('div', { class: 'slots' }, ...(filter === 'all' ? cats.slice(0, RARITIES.indexOf(r) >= 4 ? 4 : 7) : cats.slice(0, limit)).map(slot)),
+        filter !== 'all' && cats.length > limit ? el('button', { class: 'see-all', type: 'button', onclick: () => ((limit += 60), buildGallery()) }, `Show more (${cats.length - limit} left)`) : null,
         filter === 'all' && cats.length > (RARITIES.indexOf(r) >= 4 ? 4 : 7)
-          ? el('button', { class: 'see-all', type: 'button', onclick: () => ((filter = r), buildGallery(), $('cats').scrollIntoView()) }, `See all ${cats.length} ${GAME.rarity[r].label} cats →`)
+          ? el('button', { class: 'see-all', type: 'button', onclick: () => ((filter = r), (limit = 60), buildGallery(), $('cats').scrollIntoView()) }, `See all ${cats.length} ${GAME.rarity[r].label} cats →`)
           : null,
       ),
     ),
