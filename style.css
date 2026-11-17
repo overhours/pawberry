@@ -2217,7 +2217,7 @@ main,
   margin-top: var(--s3);
 }
 
-/* ---------- Vio, peeking in from the left edge, holding on ---------- */
+/* ---------- Vio, peeking in from the left edge ("shh", paw to her mouth) ---------- */
 .vio-peek {
   position: fixed;
   left: 0;
@@ -2229,13 +2229,13 @@ main,
 }
 .vio-head {
   position: absolute;
-  left: -38px;
+  left: -30px;
   top: 4px;
   width: 132px;
   height: auto;
   image-rendering: auto;
   transform-origin: 20% 80%;
-  transform: rotate(16deg);
+  transform: rotate(12deg);
   filter: drop-shadow(2px 3px 0 var(--shade));
   /* fade out the flat cut under her chin */
   -webkit-mask-image: linear-gradient(#000 74%, transparent 96%);
@@ -2246,29 +2246,12 @@ main,
 /* every so often she leans out a little further, then ducks back */
 @keyframes vio-peekaboo {
   0%, 62%, 100% { translate: 0 0; }
-  70%, 84% { translate: 12px -2px; }
+  70%, 84% { translate: 10px -2px; rotate: -4deg; }
 }
 .vio-peek:hover .vio-head,
 .vio-peek:focus-visible .vio-head {
   animation: none;
-  transform: translate(14px, -2px) rotate(8deg);
-}
-/* gloved paws curled round the edge of the screen */
-.vio-hand {
-  position: absolute;
-  left: 0;
-  width: 15px;
-  height: 26px;
-  border-radius: 0 9px 9px 0;
-  background: repeating-linear-gradient(#2e252c 0 5px, #1a1219 5px 6.5px);
-  box-shadow: 0 0 0 2px #0f0a0e, 2px 2px 0 2px var(--shade);
-  z-index: 1;
-}
-.vio-hand.top {
-  top: 12px;
-}
-.vio-hand.bottom {
-  top: 88px;
+  transform: translate(12px, -2px) rotate(4deg);
 }
 .vio-say {
   position: absolute;
