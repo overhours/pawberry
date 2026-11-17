@@ -1,0 +1,593 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Vio's room</title>
+    <meta name="robots" content="noindex" />
+    <meta name="theme-color" content="#0c0710" />
+    <link rel="icon" href="icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Pixelify+Sans:wght@400;700&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --ink: #f3d9e6;
+        --soft: #a98aa0;
+        --line: #050208;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+        padding: 16px;
+        font-family: 'DotGothic16', monospace;
+        color: var(--ink);
+        background: #07040a;
+        -webkit-font-smoothing: none;
+      }
+      .top {
+        width: min(1100px, 100%);
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 12px;
+      }
+      .back {
+        color: var(--soft);
+        text-decoration: none;
+        font-size: 15px;
+      }
+      .back:hover,
+      .back:focus-visible {
+        color: #ff8fb1;
+      }
+      .hint {
+        color: var(--soft);
+        font-size: 13px;
+      }
+
+      /* ---------- the room (everything is positioned in % of this box) ---------- */
+      .room {
+        position: relative;
+        width: min(1100px, 100%);
+        aspect-ratio: 16 / 10;
+        overflow: hidden;
+        container-type: inline-size;
+        background: linear-gradient(#1b1022 0%, #140b1a 74%, #0b060e 74%, #0f0812 100%);
+        box-shadow: 0 0 0 4px var(--line), 0 0 0 7px #2a1830, 0 20px 60px rgba(0, 0, 0, 0.6);
+        image-rendering: pixelated;
+      }
+      /* wall panels */
+      .room::before {
+        content: '';
+        position: absolute;
+        inset: 0 0 26% 0;
+        background: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.025) 0 2px, transparent 2px 8%);
+      }
+      .rug {
+        position: absolute;
+        left: 30%;
+        right: 18%;
+        bottom: 4%;
+        height: 12%;
+        border-radius: 50%;
+        background: radial-gradient(ellipse, #3a1730 0%, #2a1024 60%, transparent 70%);
+      }
+
+      /* neon sign */
+      .neon {
+        position: absolute;
+        left: 37%;
+        top: 6%;
+        font-family: 'DotGothic16', monospace;
+        font-size: 4.4cqw;
+        letter-spacing: 0.12em;
+        color: #ffd0e6;
+        text-shadow: 0 0 0.3cqw #fff, 0 0 1cqw #ff5fa2, 0 0 2.4cqw #ff2f8a, 0 0 4cqw #b8126a;
+        animation: flicker 6s steps(1) infinite;
+      }
+      @keyframes flicker {
+        0%, 100% { opacity: 1; }
+        41% { opacity: 0.35; }
+        42% { opacity: 1; }
+        44% { opacity: 0.5; }
+        45% { opacity: 1; }
+      }
+
+      /* pan flag, taped to the wall */
+      .flag {
+        position: absolute;
+        left: 5%;
+        top: 9%;
+        width: 18%;
+        aspect-ratio: 5 / 3;
+        background: linear-gradient(#ff218c 0 33.3%, #ffd800 33.3% 66.6%, #21b1ff 66.6%);
+        transform: rotate(-4deg);
+        filter: brightness(0.62) saturate(0.9);
+        box-shadow: 0 0.6cqw 1.2cqw rgba(0, 0, 0, 0.5);
+      }
+      .tape {
+        position: absolute;
+        width: 2.8cqw;
+        height: 1.1cqw;
+        background: rgba(235, 225, 200, 0.55);
+      }
+      .tape.tl { left: -0.8cqw; top: -0.4cqw; transform: rotate(-30deg); }
+      .tape.tr { right: -0.8cqw; top: -0.4cqw; transform: rotate(30deg); }
+      .tape.bl { left: -0.8cqw; bottom: -0.4cqw; transform: rotate(30deg); }
+      .tape.br { right: -0.8cqw; bottom: -0.4cqw; transform: rotate(-30deg); }
+
+      /* poster: a little pixel homage, not the real artwork */
+      .poster {
+        position: absolute;
+        left: 25%;
+        top: 13%;
+        width: 13.5%;
+        aspect-ratio: 2 / 3;
+        background: #050405;
+        transform: rotate(2deg);
+        box-shadow: 0 0 0 0.25cqw #1a1418, 0 0.8cqw 1.4cqw rgba(0, 0, 0, 0.6);
+        overflow: visible;
+        filter: brightness(0.9);
+      }
+      .poster .title {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 5%;
+        text-align: center;
+        font-family: 'Pixelify Sans', monospace;
+        font-weight: 700;
+        font-size: 1.7cqw;
+        letter-spacing: 0.04em;
+        color: #ff2a33;
+        text-shadow: 0 0 0.4cqw rgba(255, 40, 50, 0.5);
+        white-space: nowrap;
+      }
+      .poster .hood {
+        position: absolute;
+        left: 22%;
+        top: 22%;
+        width: 56%;
+        height: 50%;
+        border-radius: 48% 48% 30% 30% / 55% 55% 30% 30%;
+        background: radial-gradient(ellipse at 50% 30%, #2a2a2e 0%, #121214 60%, #050405 100%);
+      }
+      .poster .face {
+        position: absolute;
+        left: 30%;
+        top: 30%;
+        width: 40%;
+        height: 50%;
+        border-radius: 45% 45% 50% 50%;
+        background: radial-gradient(ellipse at 50% 40%, #b08a78 0%, #6e5246 60%, #2a1e1a 100%);
+      }
+      .poster .face::before,
+      .poster .face::after {
+        content: '';
+        position: absolute;
+        top: 42%;
+        width: 18%;
+        height: 6%;
+        background: #c9d3dc;
+        box-shadow: 0 0 0.2cqw rgba(200, 220, 240, 0.7);
+      }
+      .poster .face::before { left: 20%; }
+      .poster .face::after { right: 20%; }
+      .poster .body {
+        position: absolute;
+        left: 10%;
+        right: 10%;
+        top: 62%;
+        height: 22%;
+        border-radius: 40% 40% 0 0;
+        background: #0c0c0e;
+      }
+      .poster .season {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 5%;
+        text-align: center;
+        font-size: 1.05cqw;
+        letter-spacing: 0.18em;
+        color: #e8e8e8;
+      }
+
+      /* desk + monitors */
+      .desk {
+        position: absolute;
+        left: 4%;
+        width: 44%;
+        bottom: 18%;
+        height: 3.2%;
+        background: #2b1a22;
+        box-shadow: 0 0.5cqw 0 #170d13, inset 0 0.3cqw 0 #3a2430;
+      }
+      .desk::before,
+      .desk::after {
+        content: '';
+        position: absolute;
+        top: 100%;
+        width: 3%;
+        height: 8cqw;
+        background: #1c1016;
+      }
+      .desk::before { left: 4%; }
+      .desk::after { right: 4%; }
+      .rgb {
+        position: absolute;
+        left: 4.6%;
+        width: 42.8%;
+        bottom: 16.6%;
+        height: 0.5%;
+        background: linear-gradient(90deg, #ff218c, #ffd800, #21b1ff, #b06bff, #ff218c);
+        background-size: 200% 100%;
+        filter: blur(0.15cqw);
+        animation: rgb 4s linear infinite;
+      }
+      @keyframes rgb {
+        to { background-position: 200% 0; }
+      }
+      .monitor {
+        position: absolute;
+        bottom: 21.2%;
+        background: #0a0a0d;
+        box-shadow: 0 0 0 0.3cqw #1d1d22, 0 0 3cqw var(--glow);
+        overflow: hidden;
+      }
+      .monitor::after {
+        /* stand */
+        content: '';
+        position: absolute;
+      }
+      .monitor .code {
+        position: absolute;
+        left: 6%;
+        right: 4%;
+        top: 0;
+        font-family: 'DotGothic16', monospace;
+        font-size: 0.78cqw;
+        line-height: 1.35;
+        color: var(--fg);
+        white-space: pre;
+        opacity: 0.9;
+        animation: scroll var(--speed) linear infinite;
+      }
+      @keyframes scroll {
+        from { transform: translateY(0); }
+        to { transform: translateY(-50%); }
+      }
+      .monitor .scan {
+        position: absolute;
+        inset: 0;
+        background: repeating-linear-gradient(transparent 0 2px, rgba(0, 0, 0, 0.25) 2px 3px);
+        pointer-events: none;
+      }
+      .m1 { left: 6%; width: 13%; height: 15%; --glow: rgba(60, 255, 140, 0.18); --fg: #59f59a; --speed: 9s; transform: rotate(-3deg); }
+      .m2 { left: 19.5%; width: 16%; height: 19%; --glow: rgba(255, 80, 170, 0.22); --fg: #ff7fc0; --speed: 13s; }
+      .m3 { left: 36%; width: 11%; height: 13%; --glow: rgba(90, 180, 255, 0.18); --fg: #7cc8ff; --speed: 7s; transform: rotate(3deg); }
+      .keyboard {
+        position: absolute;
+        left: 20%;
+        width: 13%;
+        bottom: 21.2%;
+        height: 1.2%;
+        background: #19141c;
+        box-shadow: 0 0 0.8cqw rgba(255, 60, 160, 0.4);
+      }
+      /* an ashtray, still smouldering */
+      .ashtray {
+        position: absolute;
+        left: 40%;
+        bottom: 21.2%;
+        width: 4%;
+        height: 1.4%;
+        border-radius: 0 0 40% 40%;
+        background: #3a3a40;
+      }
+      .ashtray::before {
+        content: '';
+        position: absolute;
+        left: 55%;
+        top: -40%;
+        width: 0.35cqw;
+        height: 0.35cqw;
+        background: #ff7a3c;
+        box-shadow: 0 0 0.6cqw #ff5a1c;
+        animation: ember 2.2s ease-in-out infinite;
+      }
+      @keyframes ember {
+        50% { opacity: 0.45; }
+      }
+      .wisp {
+        position: absolute;
+        left: 41.5%;
+        bottom: 23%;
+        width: 2.4cqw;
+        height: 2.4cqw;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(210, 200, 220, 0.28), transparent 70%);
+        filter: blur(0.4cqw);
+        animation: wisp 6s ease-out infinite;
+        pointer-events: none;
+      }
+      .wisp:nth-of-type(2) { animation-delay: -2s; }
+      .wisp:nth-of-type(3) { animation-delay: -4s; }
+      @keyframes wisp {
+        from { transform: translate(0, 0) scale(0.6); opacity: 0.9; }
+        to { transform: translate(4cqw, -22cqw) scale(4); opacity: 0; }
+      }
+
+      /* server racks */
+      .rack {
+        position: absolute;
+        bottom: 16%;
+        width: 9%;
+        height: 62%;
+        background: #0b0a10;
+        box-shadow: 0 0 0 0.3cqw #1c1a24, inset 0 0 0 0.6cqw #121019;
+        display: flex;
+        flex-direction: column;
+        gap: 0.7cqw;
+        padding: 1.3cqw 0.9cqw;
+      }
+      .r1 { right: 3%; }
+      .r2 { right: 13%; height: 54%; }
+      .unit {
+        flex: 1;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 0.6cqw;
+        padding: 0 0.6cqw;
+        background: #17151e;
+        box-shadow: inset 0 0.15cqw 0 #23202c;
+      }
+      .led {
+        flex: none;
+        width: 0.45cqw;
+        height: 0.45cqw;
+        background: var(--c);
+        box-shadow: 0 0 0.6cqw var(--c);
+        animation: blink var(--d) steps(1) infinite;
+      }
+      .unit .slot {
+        flex: 1;
+        height: 22%;
+        background: #0a090e;
+      }
+      @keyframes blink {
+        50% { opacity: 0.15; }
+      }
+      .cables {
+        position: absolute;
+        right: 9%;
+        bottom: 16%;
+        width: 10%;
+        height: 3%;
+        border-radius: 50% 50% 0 0;
+        border: 0.3cqw solid #2a1630;
+        border-bottom: 0;
+      }
+
+      /* Vio in her chair */
+      .vio {
+        position: absolute;
+        left: 54%;
+        bottom: 4%;
+        height: 66%;
+        padding: 0;
+        border: 0;
+        background: none;
+        cursor: pointer;
+        filter: brightness(0.82) drop-shadow(0 0 2cqw rgba(255, 60, 150, 0.25));
+        transition: transform 0.15s;
+      }
+      .vio img {
+        height: 100%;
+        display: block;
+      }
+      .vio:hover {
+        transform: translateY(-0.4cqw);
+      }
+      .vio.mew {
+        animation: mew 0.35s cubic-bezier(0.3, 1.8, 0.5, 1);
+      }
+      @keyframes mew {
+        40% { transform: translateY(-1.4cqw) scale(1.03); }
+      }
+      .vio:focus-visible {
+        outline: 3px solid #ff8fb1;
+        outline-offset: 4px;
+      }
+      .bubble {
+        position: absolute;
+        left: 62%;
+        top: 14%;
+        padding: 0.6cqw 1.4cqw 0.8cqw;
+        font-size: 2cqw;
+        color: #2b1220;
+        background: #ffe9f2;
+        box-shadow: 0 0 0 0.3cqw var(--line), 0 0.6cqw 0 rgba(0, 0, 0, 0.4);
+        white-space: nowrap;
+        opacity: 0;
+        transform: translateY(0.6cqw) scale(0.9);
+        transition: opacity 0.15s, transform 0.2s cubic-bezier(0.3, 1.6, 0.5, 1);
+        pointer-events: none;
+      }
+      .bubble.show {
+        opacity: 1;
+        transform: none;
+      }
+      .bubble::after {
+        content: '';
+        position: absolute;
+        left: 22%;
+        top: 100%;
+        border: 0.8cqw solid transparent;
+        border-top-color: #ffe9f2;
+        border-bottom: 0;
+      }
+
+      /* the haze: someone has definitely been smoking in here */
+      .haze {
+        position: absolute;
+        inset: -20%;
+        pointer-events: none;
+        background: radial-gradient(ellipse at 30% 40%, rgba(170, 150, 190, 0.16), transparent 55%), radial-gradient(ellipse at 70% 30%, rgba(150, 140, 170, 0.13), transparent 50%),
+          radial-gradient(ellipse at 50% 70%, rgba(120, 110, 140, 0.12), transparent 60%);
+        filter: blur(1.5cqw);
+        animation: drift 26s ease-in-out infinite alternate;
+      }
+      .haze.h2 {
+        animation-duration: 38s;
+        animation-direction: alternate-reverse;
+        opacity: 0.8;
+      }
+      @keyframes drift {
+        from { transform: translate(-4%, 1%) rotate(-2deg); }
+        to { transform: translate(5%, -3%) rotate(3deg); }
+      }
+      .vignette {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background: radial-gradient(ellipse at 55% 55%, transparent 40%, rgba(0, 0, 0, 0.6) 100%);
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .haze, .wisp, .monitor .code, .rgb, .neon, .led { animation: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="top">
+      <a class="back" href="./">← sneak back out</a>
+      <span class="hint">vio's room · cat den</span>
+    </div>
+
+    <div class="room" role="img" aria-label="Vio's dark bedroom den: computers, server racks, a pan flag, a poster, and a hazy, smoky air. Vio sits in her chair.">
+      <div class="neon" aria-hidden="true">CAT DEN</div>
+      <div class="flag" aria-hidden="true"><i class="tape tl"></i><i class="tape tr"></i><i class="tape bl"></i><i class="tape br"></i></div>
+      <div class="poster" aria-hidden="true">
+        <i class="tape tl"></i><i class="tape tr"></i>
+        <div class="title">MR. ROBOT</div>
+        <div class="hood"><div class="face"></div></div>
+        <div class="body"></div>
+        <div class="season">season_1.0</div>
+      </div>
+
+      <div class="rack r2" aria-hidden="true"></div>
+      <div class="rack r1" aria-hidden="true"></div>
+      <div class="cables" aria-hidden="true"></div>
+
+      <div class="desk" aria-hidden="true"></div>
+      <div class="rgb" aria-hidden="true"></div>
+      <div class="monitor m1" aria-hidden="true"><div class="code"></div><div class="scan"></div></div>
+      <div class="monitor m2" aria-hidden="true"><div class="code"></div><div class="scan"></div></div>
+      <div class="monitor m3" aria-hidden="true"><div class="code"></div><div class="scan"></div></div>
+      <div class="keyboard" aria-hidden="true"></div>
+      <div class="ashtray" aria-hidden="true"></div>
+      <span class="wisp" aria-hidden="true"></span><span class="wisp" aria-hidden="true"></span><span class="wisp" aria-hidden="true"></span>
+
+      <div class="rug" aria-hidden="true"></div>
+      <button type="button" class="vio" id="vio" aria-label="Pet Vio"><img src="img/vio.png" alt="" id="vio-img" draggable="false" /></button>
+      <p class="bubble" id="bubble" aria-live="polite"></p>
+
+      <div class="haze" aria-hidden="true"></div>
+      <div class="haze h2" aria-hidden="true"></div>
+      <div class="vignette" aria-hidden="true"></div>
+    </div>
+
+    <script>
+      // Fake terminal noise for the monitors (doubled so the scroll loops seamlessly).
+      const LINES = ['$ ssh vio@catden', 'access granted. nyah~', 'scanning yarn.db ...', '[ok] 325 cats indexed', 'sudo meow', 'password: ********', 'fsociety.cat loaded', 'ping treats.local', '64 bytes: time=0.3ms', 'rm -rf /dogs', 'mrrp --verbose', 'decrypting snacks...', '0x6E 0x79 0x61 0x68', 'whoami', 'vio', 'tail -f purr.log']
+      document.querySelectorAll('.monitor .code').forEach((el, i) => {
+        const pick = Array.from({ length: 18 }, (_, k) => LINES[(k * 7 + i * 5) % LINES.length]).join('\n')
+        el.textContent = pick + '\n' + pick
+      })
+
+      // Server rack lights.
+      const COLORS = ['#3cff8c', '#3cff8c', '#5ab4ff', '#ff4fa3', '#ffd800']
+      document.querySelectorAll('.rack').forEach((rack, r) => {
+        for (let u = 0; u < (r ? 9 : 8); u++) {
+          const unit = document.createElement('div')
+          unit.className = 'unit'
+          for (let l = 0; l < 3; l++) {
+            const led = document.createElement('i')
+            led.className = 'led'
+            led.style.setProperty('--c', COLORS[(u * 3 + l + r) % COLORS.length])
+            led.style.setProperty('--d', 0.6 + ((u * 7 + l * 3 + r) % 9) * 0.35 + 's')
+            unit.append(led)
+          }
+          const slot = document.createElement('i')
+          slot.className = 'slot'
+          unit.append(slot)
+          rack.append(unit)
+        }
+      })
+
+      // Every click: a different meow, in text and in sound.
+      const MEOWS = ['meow.', 'mrrp?', 'nyaa~', 'mrrrow!', '...mew', 'MRAOW', 'prrrp', 'nya?', 'mew mew', 'mrrrrrrp~', 'meeeow...', 'nyah~!']
+      const vio = document.getElementById('vio')
+      const img = document.getElementById('vio-img')
+      const bubble = document.getElementById('bubble')
+      let ctx = null
+      let last = -1
+      let timer = 0
+
+      function meowSound(i) {
+        try {
+          ctx = ctx || new (window.AudioContext || window.webkitAudioContext)()
+          const t = ctx.currentTime
+          const base = 380 + ((i * 97) % 340) // each meow has its own pitch
+          const len = 0.22 + ((i * 53) % 30) / 100
+          const osc = ctx.createOscillator()
+          const filter = ctx.createBiquadFilter()
+          const gain = ctx.createGain()
+          osc.type = i % 3 === 0 ? 'triangle' : 'sawtooth'
+          osc.frequency.setValueAtTime(base, t)
+          osc.frequency.linearRampToValueAtTime(base * (1.3 + (i % 4) * 0.12), t + len * 0.35)
+          osc.frequency.linearRampToValueAtTime(base * (0.75 + (i % 3) * 0.1), t + len)
+          filter.type = 'lowpass'
+          filter.frequency.value = 1800
+          gain.gain.setValueAtTime(0.0001, t)
+          gain.gain.exponentialRampToValueAtTime(0.12, t + 0.03)
+          gain.gain.exponentialRampToValueAtTime(0.0001, t + len)
+          osc.connect(filter).connect(gain).connect(ctx.destination)
+          osc.start(t)
+          osc.stop(t + len + 0.05)
+        } catch {
+          /* no audio available - the bubble still shows */
+        }
+      }
+
+      vio.addEventListener('click', () => {
+        let i
+        do i = Math.floor(Math.random() * MEOWS.length)
+        while (i === last)
+        last = i
+        bubble.textContent = MEOWS[i]
+        bubble.classList.add('show')
+        img.src = 'img/vio-happy.png'
+        vio.classList.remove('mew')
+        void vio.offsetWidth
+        vio.classList.add('mew')
+        meowSound(i)
+        clearTimeout(timer)
+        timer = setTimeout(() => {
+          bubble.classList.remove('show')
+          img.src = 'img/vio.png'
+        }, 1300)
+      })
+    </script>
+  </body>
+</html>

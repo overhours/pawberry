@@ -2216,3 +2216,67 @@ main,
 #board-note {
   margin-top: var(--s3);
 }
+
+/* ---------- Vio, peeking in from the corner ---------- */
+.vio-peek {
+  position: fixed;
+  left: 0;
+  bottom: 22px;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  transform: translateX(-34px);
+  transition: transform 0.25s cubic-bezier(0.3, 1.5, 0.5, 1);
+}
+.vio-peek img {
+  display: block;
+  image-rendering: auto;
+  background: #3a1730;
+  box-shadow: 0 0 0 3px var(--line), 4px 4px 0 3px var(--shade);
+}
+.vio-peek:hover,
+.vio-peek:focus-visible {
+  transform: translateX(0);
+}
+.vio-peek:focus-visible {
+  outline: none;
+}
+.vio-peek:focus-visible img {
+  box-shadow: 0 0 0 3px var(--line), 0 0 0 6px var(--pink, #ff8fb1);
+}
+.vio-say {
+  position: relative;
+  padding: 4px 10px 5px;
+  font-size: var(--fs-tiny);
+  line-height: 1.3;
+  white-space: nowrap;
+  color: var(--ink);
+  background: var(--paper);
+  box-shadow: 0 0 0 3px var(--line);
+  opacity: 0.92;
+}
+.vio-say::before {
+  content: '';
+  position: absolute;
+  right: 100%;
+  top: 50%;
+  margin-top: -6px;
+  border: 6px solid transparent;
+  border-right-color: var(--line);
+}
+@media (max-width: 600px) {
+  .vio-peek {
+    bottom: 12px;
+  }
+  .vio-peek img {
+    width: 58px;
+    height: auto;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .vio-peek {
+    transition: none;
+  }
+}
