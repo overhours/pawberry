@@ -115,10 +115,17 @@ async function loadReleases() {
     const releases = (await r.json()).filter((x) => !x.draft)
     const latest = releases[0]
     if (latest) {
-      const setup = latest.assets.find((a) => /Setup.*\.exe$/.test(a.name))
-      const portable = latest.assets.find((a) => /Portable.*\.exe$/.test(a.name))
-      document.querySelectorAll('[data-download="setup"]').forEach((a) => setup && (a.href = setup.browser_download_url))
-      document.querySelectorAll('[data-download="portable"]').forEach((a) => portable && (a.href = portable.browser_download_url))
+      const find = (re) => latest.assets.find((a) => re.test(a.name))
+      const files = { setup: find(/Setup.*\.exe$/), portable: find(/Portable.*\.exe$/), mac: find(/-mac\.dmg$/), appimage: find(/\.AppImage$/), deb: find(/\.deb$/) }
+      // The big buttons offer the right download for this computer.
+      const ua = navigator.userAgent
+      const os = /Macintosh/.test(ua) ? 'mac' : /Linux|X11/.test(ua) && !/Android/.test(ua) ? 'appimage' : 'setup'
+      files.mine = files[os] ?? files.setup
+      const label = { mac: 'Download for Mac', appimage: 'Download for Linux', setup: 'Download for Windows' }
+      if (files[os]) $('dl-main') && ($('dl-main').textContent = label[os])
+      for (const [kind, file] of Object.entries(files)) document.querySelectorAll(`[data-download="${kind}"]`).forEach((a) => file && (a.href = file.browser_download_url))
+      // The Mac link only shows once a Mac build is actually on the release.
+      if (files.mac) document.querySelectorAll('.dl-mac').forEach((m) => (m.hidden = false))
       $('version').textContent = `v${latest.tag_name.replace(/^v/, '')}, free`
     }
     $('timeline').replaceChildren(...releases.slice(0, 4).map(entry))

@@ -2297,3 +2297,20 @@ main,
     animation: none;
   }
 }
+
+/* the other platforms, under the big download button */
+.dl-others {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 6px 10px;
+  margin: 0;
+  font-size: var(--fs-small);
+}
+.dl-others i {
+  width: 4px;
+  height: 4px;
+  background: currentColor;
+  opacity: 0.4;
+}
