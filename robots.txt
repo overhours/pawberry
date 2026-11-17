@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Disallow: /vio.html
+Sitemap: https://overhours.github.io/pawberry/sitemap.xml
